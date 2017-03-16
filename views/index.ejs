@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        moongoose message board
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="jumbotron">
+<h1>Message Board </h1>
+
+
+<form action="/message" method="POST">
+    Name:<input type="text" name="name" id="name">
+    Message: <textarea type="text" cols="50" rows="5" name="message" id="age"></textarea>
+    <input type="submit" value="Post Message">
+</form>
+</div>
+
+
+
+<h2>Messages Board</h2>
+<% if(typeof(errors) != 'undefined' ) { %>
+<% for (var x in errors) { %>
+<h4><%= errors[x].message %></h4>
+<% } %>
+<% } else { %>
+
+    <% for(x in result) { %>
+        <h2>Name: <%= result[x].name %></h2>
+        <h2>Message: <%= result[x].message %></h2>
+
+<% for (y of result[x].comments) { %>
+
+<h5>Name:<%=  y.name %></h5>
+<h5> Comment:<%= y.text %></h5>
+<% } %>
+
+        <h4>Leave a comment</h4>
+        <form action="/addComment/<%= result[x]._id %>" method="POST">
+            Name:<input type="text" name="name" id="name">
+            Comment: <textarea type="text" cols="50" rows="3" name="comment" id="age"></textarea>
+            <input type="submit" value="Comment on this Message">
+        </form>
+
+    <% } %>
+<% } %>
+
+</body>
+</html>
